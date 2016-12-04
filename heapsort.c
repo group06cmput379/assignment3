@@ -49,6 +49,7 @@ void process()
     // make sure that i is in unsigned int
     srand(time(NULL));
     int i, N, j, k, t, min, f;
+    printf("Please enter number of keys to sort: ");
     scanf ("%d", &N);
     printf("Sorting %d keys\n", N);
 
