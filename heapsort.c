@@ -2,6 +2,9 @@
 #include <time.h>
 #include "simulator.h"
 
+static int psize;
+static int winsize;
+
 
 int max (int n, int i, int j, int k) {
     int m = i;
@@ -50,7 +53,7 @@ void process()
     printf("Sorting %d keys\n", N);
 
     
-    init (128, 1000);
+    init (psize, winsize);
     
 
     for (i = 0; i < N; i++)
@@ -64,7 +67,10 @@ void process()
 }
 
 
-int main () {
-    process();
+int main (int argc, char *argv[]) {
+
+  psize = atoi(argv[1]);
+  winsize = atoi(argv[2]);
+  process();
 
 }
