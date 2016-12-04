@@ -5,12 +5,14 @@ set -e
 psize=$1
 winsize=$2
 
-if [ $3 = "quicksort" ]; then
-    make quicksort
-    ./quicksort
-elif [ $3 = "heapsort" ]; then
+if [ $1 = "clean" ]; then
+    make clean
+elif [ $3 = "heapsort" ] || [ $3 = "heapsort.c" ]; then
     make heapsort
     ./heapsort
+elif [ $3 = "quicksort" ] || [ $3 = "quicksort.c" ]; then
+    make quicksort
+    ./quicksort
 fi
 
 
