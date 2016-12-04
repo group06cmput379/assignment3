@@ -3,6 +3,9 @@
 #include <time.h>
 #include "simulator.h"
 
+static int psize;
+static int winsize;
+
 void swap(int i, int j){
   int temp = get(i);
   put(i, get(j));
@@ -53,7 +56,7 @@ void process()
   scanf("%d", &N);
   printf("Sorting %d keys\n", N);
 
-  init(128, 1000);
+  init(psize, winsize);
   
   i = 0;
   for (i=0;i<N;i++)
@@ -66,8 +69,10 @@ void process()
 }
 
 
-int main(){
+int main(int argc, char *argv[]){
 
+  psize = atoi(argv[1]);
+  winsize = atoi(argv[2]);
   process();
 }
 
