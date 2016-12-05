@@ -2,12 +2,12 @@
 #include <time.h>
 #include "simulator.h"
 
+
 static int psize;
 static int winsize;
 
-
-int max (int n, int i, int j, int k) {
-    int m = i;
+unsigned int max (unsigned int n, unsigned int i, unsigned int j, unsigned int k) {
+    unsigned int m = i;
     if (j < n && get(j) > get(m)) {
         m = j;
     }
@@ -17,9 +17,9 @@ int max (int n, int i, int j, int k) {
     return m;
 }
  
-void downheap (int n, int i) {
+void downheap (unsigned int n, unsigned int i) {
     while (1) {
-        int j = max(n, i, 2 * i + 1, 2 * i + 2);
+        unsigned int j = max(n, i, 2 * i + 1, 2 * i + 2);
         if (j == i) {
             break;
         }
@@ -31,8 +31,8 @@ void downheap (int n, int i) {
     }
 }
  
-void heapsort (int n) {
-    int i;
+void heapsort (unsigned int n) {
+    unsigned int i;
     for (i = (n - 2) / 2; i >= 0; i--) {
         downheap(n, i);
     }
@@ -46,19 +46,19 @@ void heapsort (int n) {
 
 void process()
 {
-    // make sure that i is in unsigned int
     srand(time(NULL));
-    int i, N, j, k, t, min, f;
-    printf("Please enter number of keys to sort: ");
+    unsigned int i, j, k, t, min, f;
+    unsigned int N;
     scanf ("%d", &N);
     printf("Sorting %d keys\n", N);
 
     
-    init (psize, winsize);
-    
+    init (128, 1000);
+    printf("Made it\n");
 
     for (i = 0; i < N; i++)
     {
+        printf("%d\n",i);
         put (i, rand());
     }
 
@@ -68,10 +68,11 @@ void process()
 }
 
 
-int main (int argc, char *argv[]) {
 
-  psize = atoi(argv[1]);
-  winsize = atoi(argv[2]);
+int main(int argc, char *argv[]){
+
+  //psize = atoi(argv[1]);
+  //winsize = atoi(argv[2]);
+
   process();
-
 }

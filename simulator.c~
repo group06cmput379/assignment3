@@ -12,11 +12,10 @@ int currentWindow = 0;
 int currentIndex = 0;
 int next = 0;
 int page;
-unsigned int size;
 
 struct linked_list
 {
-	unsigned int key;
+	int key;
 	int data;
 	struct linked_list *next;
 	struct linked_list *previous;
@@ -27,7 +26,7 @@ typedef struct linked_list llist;
 llist* head = NULL;
 llist** table;
 
-llist* ll_new(unsigned int key, int data)
+llist* ll_new(unsigned int key, double data)
 {
 	llist* new = malloc(sizeof(llist));
 	new->key = key;
@@ -71,19 +70,19 @@ llist* ll_search(llist* head, unsigned int key)
 }
 
 
-void ht_insert(llist** table, unsigned int size, llist* item)
+void ht_insert(llist** table, int size, llist* item)
 {
-	unsigned int key=item->key;
+	int key=item->key;
 	table[key%size]=ll_insert(table[key%size],item);
 }
 
-void ht_delete(llist** table, unsigned int size, llist* item)
+void ht_delete(llist** table, int size, llist* item)
 {
-	unsigned int key = item->key;
+	int key = item->key;
 	table[key%size]=ll_delete(table[key%size],item);
 }
 
-llist* ht_search(llist** table, unsigned int size, unsigned int key)
+llist* ht_search(llist** table, int size, int key)
 {
 	return ll_search(table[key%size],key);
 }
@@ -94,9 +93,9 @@ void init(int psize, int winsize)
 {
 	page_size = psize;
 	window_size = winsize;
-	size = 512;
+	int size = 512;
 	table = malloc(size*sizeof(llist*));
-	pages_accessed = (int*) malloc (sizeof(int));
+	pages_accessed = (int *) malloc (sizeof(int));
 		//workingSetSizes = (int *) malloc (sizeof(int));
 
 }
@@ -104,13 +103,11 @@ void init(int psize, int winsize)
 
 
 
-
-
-void addPageAccessed(unsigned int address)
+void addPageAccessed(int address)
 {
 
 	pages_accessed = (int*)realloc(pages_accessed, (next+1)*sizeof(int));
-	int page = (int) address/page_size;
+	int page = address/page_size;
 
 	pages_accessed[next] = page;
 	next = next + 1;
@@ -121,7 +118,7 @@ void put(unsigned int address, int value)
 {
 
 	llist* new =ll_new(address, value);
-	ht_insert(table, size, new);
+	ht_insert(table, 512, new);
 	addPageAccessed(address);
 
 }
@@ -131,12 +128,13 @@ void put(unsigned int address, int value)
 
 int get(unsigned int address)
 {
-	llist* searchedNode = ht_search(table, size, address);
+	llist* searchedNode = ht_search(table, 512, address);
 	int value = searchedNode->data;
 	addPageAccessed(address);
 
 	return value;
 }
+
 
 
 

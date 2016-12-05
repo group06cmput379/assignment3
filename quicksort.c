@@ -53,11 +53,10 @@ void process()
 {
   srand(time(NULL));
   int N, i;
-  printf("Please enter the number of keys to sort: ");
   scanf("%d", &N);
   printf("Sorting %d keys\n", N);
 
-  init(psize, winsize);
+  init(128, 1000);
   
   i = 0;
   for (i=0;i<N;i++)
