@@ -3,8 +3,8 @@
 #include "simulator.h"
 
 
-static int psize;
-static int winsize;
+int psize;
+int winsize;
 
 unsigned int max (unsigned int n, unsigned int i, unsigned int j, unsigned int k) {
     unsigned int m = i;
@@ -33,7 +33,7 @@ void downheap (unsigned int n, unsigned int i) {
  
 void heapsort (unsigned int n) {
     unsigned int i;
-    for (i = (n - 2) / 2; i >= 0; i--) {
+    for (i = (n - 2) / 2;(int) i >= 0; i--) {
         downheap(n, i);
     }
     for (i = 0; i < n; i++) {
@@ -53,12 +53,10 @@ void process()
     printf("Sorting %d keys\n", N);
 
     
-    init (128, 1000);
-    printf("Made it\n");
+    init(psize, winsize);
 
     for (i = 0; i < N; i++)
     {
-        printf("%d\n",i);
         put (i, rand());
     }
 
@@ -71,8 +69,8 @@ void process()
 
 int main(int argc, char *argv[]){
 
-  //psize = atoi(argv[1]);
-  //winsize = atoi(argv[2]);
+  psize = atoi(argv[1]);
+  winsize = atoi(argv[2]);
 
   process();
 }

@@ -56,7 +56,7 @@ void process()
   scanf("%d", &N);
   printf("Sorting %d keys\n", N);
 
-  init(128, 1000);
+  init(psize, winsize);
   
   i = 0;
   for (i=0;i<N;i++)

@@ -94,7 +94,7 @@ void init(int psize, int winsize)
 {
 	page_size = psize;
 	window_size = winsize;
-	size = 512;
+	size = 1048576;
 	table = malloc(size*sizeof(llist*));
 	pages_accessed = (int*) malloc (sizeof(int));
 		//workingSetSizes = (int *) malloc (sizeof(int));
@@ -178,7 +178,7 @@ void done()
 
 	int currentIndex = 0;
 	int currentsize = window_size;
-	
+	int total =0;
 	for (i =0; i <windows; i++)
 	{
 
@@ -208,10 +208,11 @@ void done()
 
 		free(uniquevalues);
 		printf("Working set size: %d\n",index);
+		total = total + index;
 
 	}
-
-
+	double average = (double)total /(double)windows;
+	printf ("%f\n", average);
 
 }
 
