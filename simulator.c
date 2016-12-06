@@ -100,7 +100,7 @@ void init(int psize, int winsize)
 {
 	page_size = psize;
 	window_size = winsize;
-	size = 1048576;
+	size = 524288;
 	table = malloc(size*sizeof(llist*));
 	pages_accessed = (int*) malloc (sizeof(int));
 		//workingSetSizes = (int *) malloc (sizeof(int));
