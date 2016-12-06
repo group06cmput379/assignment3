@@ -3,7 +3,7 @@
 #include "simulator.h"
 #include <math.h>
 
-
+//setting up our global variables for the simulator
 int page_size, window_size;
 int *pages_accessed;
 int *workingSetSizes;
@@ -14,6 +14,7 @@ int next = 0;
 int page;
 unsigned int size;
 
+//basic structure for our doubly linked list (which exists within a hash table to store all values)
 struct linked_list
 {
 	unsigned int key;
@@ -27,6 +28,7 @@ typedef struct linked_list llist;
 llist* head = NULL;
 llist** table;
 
+//Create a new linked list when needed
 llist* ll_new(unsigned int key, int data)
 {
 	llist* new = malloc(sizeof(llist));
@@ -37,6 +39,7 @@ llist* ll_new(unsigned int key, int data)
 	return new;
 }
 
+//Insert a node into an existing list
 llist* ll_insert(llist* head, llist* new)
 {
 	new->next = head;
@@ -47,7 +50,7 @@ llist* ll_insert(llist* head, llist* new)
 }
 
 
-
+//Delete an item from a given list
 llist* ll_delete(llist*head, llist* item)
 {
 	if (item->previous!=NULL)
@@ -59,7 +62,7 @@ llist* ll_delete(llist*head, llist* item)
 	return head;
 }
 
-
+//Search through a list for a specific key (or address)
 llist* ll_search(llist* head, unsigned int key)
 {
 	for (;head!=NULL;head=head->next)
@@ -70,26 +73,29 @@ llist* ll_search(llist* head, unsigned int key)
 	return NULL;
 }
 
-
+//Insert an item into a linked list of a specific hash table entry
 void ht_insert(llist** table, unsigned int size, llist* item)
 {
 	unsigned int key=item->key;
 	table[key%size]=ll_insert(table[key%size],item);
 }
 
+//Delete an item from the linked list of a specific hash table entry
 void ht_delete(llist** table, unsigned int size, llist* item)
 {
 	unsigned int key = item->key;
 	table[key%size]=ll_delete(table[key%size],item);
 }
 
+//Search for an item in the hash table
 llist* ht_search(llist** table, unsigned int size, unsigned int key)
 {
 	return ll_search(table[key%size],key);
 }
 
 
-
+//Initializing space for our parameters given when the program is executed
+//We chose a table size of 2^20 to try and keep our linked lists relatively small (avoid deep searches)
 void init(int psize, int winsize)
 {
 	page_size = psize;
@@ -102,10 +108,7 @@ void init(int psize, int winsize)
 }
 
 
-
-
-
-
+//Keep track of a page by adding it to an array and reallocating memory for a new page
 void addPageAccessed(unsigned int address)
 {
 
@@ -116,7 +119,7 @@ void addPageAccessed(unsigned int address)
 	next = next + 1;
 }
 
-
+//Puts a random value into an address in the hash table
 void put(unsigned int address, int value)
 {
 
@@ -126,9 +129,7 @@ void put(unsigned int address, int value)
 
 }
 
-
-
-
+//Gets a specific value from our hash table
 int get(unsigned int address)
 {
 	llist* searchedNode = ht_search(table, size, address);
@@ -138,9 +139,8 @@ int get(unsigned int address)
 	return value;
 }
 
-
-
-
+//If we've accessed a new page for the first time, add it to an array
+//If the page has already been accessed, ignore it
 int addToUniqueArray(int page, int index)
 {
 	int exists = 0;
@@ -165,7 +165,7 @@ int addToUniqueArray(int page, int index)
 
 }
 
-
+//Clean up the simulator when all of the work has been done. Return necessary information about the simulator and free memory
 void done()
 {
 	int i = 0;
@@ -211,6 +211,8 @@ void done()
 		total = total + index;
 
 	}
+
+	//Returns the average working set size
 	double average = (double)total /(double)windows;
 	printf ("%f\n", average);
 

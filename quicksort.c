@@ -6,12 +6,14 @@
 static int psize;
 static int winsize;
 
+//Swap a smaller value with a larger value
 void swap(int i, int j){
   int temp = get(i);
   put(i, get(j));
   put(j, temp);
 }
 
+//In-place partitioning of the elements 
 int partition(int left, int right){
   int pivot, begin, end, i;
  
@@ -29,6 +31,7 @@ int partition(int left, int right){
   return(begin+1);
 }
 
+//Sort the different partitions to return all of the elements in ascending order
 void quicksort(int begin,int end)
 {
   int q;
@@ -49,6 +52,8 @@ void quicksort(int begin,int end)
     }    	  
 }
 
+
+//Process function takes in a specified number of keys, stores them in our hash table and then sorts them in ascending order using quicksort
 void process()
 {
   srand(time(NULL));
@@ -69,6 +74,7 @@ void process()
 }
 
 
+//Main function that takes in the page and window sizes via Command Line Arguments and then calls process() function
 int main(int argc, char *argv[]){
 
   psize = atoi(argv[1]);

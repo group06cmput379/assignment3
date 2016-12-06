@@ -6,6 +6,7 @@
 int psize;
 int winsize;
 
+//Max heap for our sort
 unsigned int max (unsigned int n, unsigned int i, unsigned int j, unsigned int k) {
     unsigned int m = i;
     if (j < n && get(j) > get(m)) {
@@ -17,6 +18,7 @@ unsigned int max (unsigned int n, unsigned int i, unsigned int j, unsigned int k
     return m;
 }
  
+//Down heap for our sort
 void downheap (unsigned int n, unsigned int i) {
     while (1) {
         unsigned int j = max(n, i, 2 * i + 1, 2 * i + 2);
@@ -31,6 +33,7 @@ void downheap (unsigned int n, unsigned int i) {
     }
 }
  
+// Base of our heapsort
 void heapsort (unsigned int n) {
     unsigned int i;
     for (i = (n - 2) / 2;(int) i >= 0; i--) {
@@ -44,6 +47,7 @@ void heapsort (unsigned int n) {
     }
 }
 
+//Process function which takes in a number of keys to sort, randomizes the values and then stores them in our hash table
 void process()
 {
     srand(time(NULL));
@@ -66,7 +70,7 @@ void process()
 }
 
 
-
+//Get the page and window size from the input arguments and call process() function
 int main(int argc, char *argv[]){
 
   psize = atoi(argv[1]);
