@@ -7,17 +7,17 @@ static int psize;
 static int winsize;
 
 //Swap a smaller value with a larger value
-void swap(int i, int j){
+void swap(unsigned int i, unsigned int j){
   int temp = get(i);
   put(i, get(j));
   put(j, temp);
 }
 
 //In-place partitioning of the elements 
-int partition(int left, int right){
-  int pivot, begin, end, i;
- 
-  pivot=get(right);
+unsigned int partition(unsigned int left, unsigned int right){
+  unsigned int begin, end, i;
+  int pivot;
+  pivot = get(right);
   begin = left - 1;
   for (i = left; i <= right-1; i++)
     {
@@ -34,7 +34,7 @@ int partition(int left, int right){
 //Sort the different partitions to return all of the elements in ascending order
 void quicksort(int begin,int end)
 {
-  int q;
+  unsigned int q;
   while(begin < end)
     {
       q = partition(begin, end);
@@ -57,7 +57,7 @@ void quicksort(int begin,int end)
 void process()
 {
   srand(time(NULL));
-  int N, i;
+  unsigned int N, i;
   printf("Please enter the number of keys to sort: ");
   scanf("%d", &N);
   printf("Sorting %d keys\n", N);
